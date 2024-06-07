@@ -1,12 +1,8 @@
-// const {REACT_APP_OPEN_WEATHER_API_KEY} = process.env
-
 export const SearchCity = () => {
   const apiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
- 
 
   async function getConditions(location) {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`;
-    console.log("url", url)
     const response = await fetch(url, {
       method: "POST",
       body: location,
@@ -21,7 +17,6 @@ export const SearchCity = () => {
     const formData = new FormData(e.currentTarget);
     const location = formData.get("location");
     getConditions(location);
-    console.log("apikey", apiKey);
   };
 
   return (
