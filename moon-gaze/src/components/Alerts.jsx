@@ -1,12 +1,8 @@
-import { Header } from "../components";
-
-export const Alerts = () => {
+export const Alerts = ({location}) => {
     return(
       <>
-      <Header />
         <h2>Email Alerts</h2>
-        <p>Email me when moon-gazing conditions are optimal for</p>
-        <h2>Austin</h2>
+        <p>Email me when moon-gazing conditions are optimal for this location</p>
         <form>
           <input placeholder='hello@email.com'></input>
           <button type='submit'>Submit</button>

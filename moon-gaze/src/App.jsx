@@ -1,32 +1,22 @@
-import './App.css';
-import { Home, Conditions, Places, Alerts} from './views';
-import { NotFound } from './utils';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import "./App.css";
+import { Home, Details } from "./views";
+import { NotFound } from "./utils";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
-  const router = createBrowserRouter([{
-    path: '/',
-    element: <Home />,
-    errorElement: <NotFound />
-  },
-  {
-    path: '/conditions',
-    element: <Conditions />
-  },
-  {
-    path: '/places',
-    element: <Places />
-  },
-  {
-    path: '/alerts',
-    element: <Alerts />
-  }
-]);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />,
+      errorElement: <NotFound />,
+    },
+    {
+      path: "/details/:location",
+      element: <Details />,
+    },
+  ]);
 
-
-  return (
-    <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

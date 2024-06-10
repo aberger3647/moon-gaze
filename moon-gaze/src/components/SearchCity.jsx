@@ -1,5 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 export const SearchCity = () => {
   const apiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
+  const navigate = useNavigate();
 
   async function getConditions(location) {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`;
@@ -8,7 +11,7 @@ export const SearchCity = () => {
       body: location,
     });
     const data = await response.json();
-    console.log("data", data);
+    // console.log("data", data);
     return data;
   }
 
@@ -16,7 +19,11 @@ export const SearchCity = () => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const location = formData.get("location");
-    getConditions(location);
+    getConditions(location).then((data) => {
+      if (data.cod == 200) {
+        navigate(`details/${location}`, { state: data  });
+      }
+    });
   };
 
   return (
