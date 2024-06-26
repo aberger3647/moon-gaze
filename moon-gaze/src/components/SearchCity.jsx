@@ -1,29 +1,41 @@
 import { useNavigate } from "react-router-dom";
 
 export const SearchCity = () => {
-  const apiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
+  const apiKey = process.env.REACT_APP_VISUAL_CROSSING_API_KEY;
   const navigate = useNavigate();
 
   async function getConditions(location) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`;
-    const response = await fetch(url, {
-      method: "POST",
-      body: location,
-    });
-    const data = await response.json();
-    // console.log("data", data);
-    return data;
+    const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/?key=${apiKey}`;
+    
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error. Status: ${response.status}`);
+      }
+      const data = await response.json();
+      // console.log('search', data)
+      return data;
+  }
+  catch (error) {
+    console.error('There was a problem fetching the data: ', error);
+    throw error;
+  }
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const location = formData.get("location");
-    getConditions(location).then((data) => {
-      if (data.cod == 200) {
-        navigate(`details/${location}`, { state: data  });
+    let location = formData.get("location");
+    try {
+      const data = await getConditions(location);
+      if (data && data.resolvedAddress) {
+        navigate(`details/${location}`, { state: data });
+      } else {
+        console.error(`Unexpected data format: ${data}`)
       }
-    });
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
   };
 
   return (
