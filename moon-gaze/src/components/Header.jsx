@@ -4,7 +4,7 @@ export const Header = () => {
   return (
     <Link to='/'>
       <h1>Moon Phase</h1>
-      <p>moon image</p>
+      <img src='./moon/fullMoon.svg' width='200px' height='200px' />
     </Link>
   );
 };
