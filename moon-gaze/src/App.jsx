@@ -1,6 +1,5 @@
 import "./App.css";
-import { Home, Details } from "./views";
-import { NotFound } from "./utils";
+import { Home, NotFound } from "./views";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
@@ -9,11 +8,7 @@ function App() {
       path: "/",
       element: <Home />,
       errorElement: <NotFound />,
-    },
-    {
-      path: "/details/:location",
-      element: <Details />,
-    },
+    }
   ]);
 
   return <RouterProvider router={router} />;
