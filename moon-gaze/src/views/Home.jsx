@@ -1,10 +1,11 @@
-import { Header, Conditions, Alerts, Places } from "../components";
-import { getConditions, determineMoonPhase } from "../utils";
+import { Conditions, Alerts, Places } from "../components";
+import { getConditions, determineMoonPhase, convertToCamelCase } from "../utils";
 import { useState } from "react";
 
 export const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [moonPhase, setMoonPhase] = useState('')
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +18,8 @@ export const Home = () => {
       if (conditions && conditions.resolvedAddress) {
         console.log(conditions);
         setData(conditions);
+        setMoonPhase(determineMoonPhase(conditions.days[0].moonphase))
+        console.log(moonPhase)
       } else {
         console.error(`Unexpected data format: ${conditions}`);
       }
@@ -25,11 +28,11 @@ export const Home = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
     <>
-      <Header />
+    <h1>Moon Phase</h1>
 
       <form onSubmit={onSubmit}>
         <label htmlFor="location">Enter location</label>
@@ -40,14 +43,15 @@ export const Home = () => {
         <p>Loading...</p>
       ) : data ? (
         <>
-          <h2>{determineMoonPhase(data.days[0].moonphase)}</h2>
+        <img src={`./moon/${convertToCamelCase(moonPhase)}.svg`} width='200px' height='200px' />
+          <h2>{moonPhase}</h2>
           <h2>{data.resolvedAddress}</h2>
 
           <Conditions data={data} />
           <Alerts location={data.resolvedAddress} />
-  <Places location={data.resolvedAddress} />
+          <Places location={data.resolvedAddress} />
         </>
-      ) : null }
+      ) : null}
     </>
   );
 };
