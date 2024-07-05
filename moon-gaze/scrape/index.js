@@ -17,7 +17,7 @@ const path = require("path");
     );
     console.log("Page loaded");
 
-    const city = 'Austin'
+    const city = 'Tampa'
     await page.getByLabel("Keywords, name, etc.").fill(city);
     console.log("Search term entered");
 
@@ -42,23 +42,31 @@ const path = require("path");
       console.log("Page content length:", pageContent.length);
       console.log("First 500 characters of page content:", pageContent.substring(0, 500));
     } else {
-      const numOfResults = Math.min(10, cards.length);
+      const numOfResults = 5;
       console.log(`Processing ${numOfResults} cards...`);
-      
+
+      const placeArr = [];
       for (let i = 0; i < numOfResults; i++) {
-        console.log(`Processing card ${i + 1}...`);
+          console.log(`Processing card ${i + 1}...`);
+          const placeInfo = {};
         const card = cards[i];
         try {
           const placeName = await card.locator('.card__ti__a').textContent();
-          console.log(`Place name: ${placeName.trim()}`);
+        //   console.log(`Place name: ${placeName.trim()}`);
+          placeInfo['placeName'] = placeName.trim();
           const category = await card.locator('.card__cat__link').textContent();
-          console.log(`Category: ${category.trim()}`);
+        //   console.log(`Category: ${category.trim()}`);
+          placeInfo['category'] = category.trim();
           const placeUrl = await card.locator('.card__ti__a').getAttribute('href');
-          console.log(`URL: ${placeUrl || 'No Url'}`);
+        //   console.log(`URL: ${placeUrl || 'No Url'}`);
+          placeInfo['placeUrl'] = placeUrl
+          placeArr.push(placeInfo)
         } catch (error) {
           console.error(`Error processing card ${i + 1}:`, error);
         }
       }
+
+      console.log(placeArr)
     }
 
   } catch (error) {
