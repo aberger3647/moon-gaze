@@ -9,6 +9,7 @@ const apiKey = process.env.REACT_APP_VISUAL_CROSSING_API_KEY;
         throw new Error(`HTTP error. Status: ${response.status}`);
       }
       const data = await response.json();
+      console.log(data)
       return data;
   }
   catch (error) {

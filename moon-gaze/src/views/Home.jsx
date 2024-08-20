@@ -31,12 +31,12 @@ export const Home = () => {
   }
 
   return (
-    <>
+    <main>
     <h1>Moon Phase</h1>
 
       <form onSubmit={onSubmit}>
         <label htmlFor="location">Enter location</label>
-        <input name="location" id="location"></input>
+        <input name="location" id="location" placeholder="city"></input>
         <button type="submit">Submit</button>
       </form>
       {loading ? (
@@ -52,6 +52,6 @@ export const Home = () => {
           <Places location={data.resolvedAddress} />
         </>
       ) : null}
-    </>
+    </main>
   );
 };
