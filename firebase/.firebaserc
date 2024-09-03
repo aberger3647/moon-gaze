@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "default": "moongazing"
+  },
+  "targets": {},
+  "etags": {
+    "moongazing": {
+      "extensionInstances": {}
+    }
+  },
+  "dataconnectEmulatorConfig": {}
+}

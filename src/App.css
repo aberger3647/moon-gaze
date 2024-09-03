@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'Herculanum';
+  src: url('./fonts/Herculanum.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  background: linear-gradient(180deg, rgba(19,0,69,1) 0%, rgba(31,0,116,1) 100%); 
+  font-family: 'Herculanum', sans-serif;
+  color: #FFFFE5;
+  height: 100vh;
+  padding: 0px 20px 0px 20px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+input, select {
+  background: #FFFFE5;
+  opacity: 0.5;
+  padding: 8px;
+  border-radius: 20px;
+  border: 2px solid #FFFFE5;
+  font-family: 'Herculanum', sans-serif;
+  color: #1F0074;
+  text-align: center;
+}
+
+input:focus {
+  outline: 0;
+}
+
+main, form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+form > * {
+  margin: 10px;
+}
+
+p, h1, h2, h3, h4 {
+  text-align: center;
+}
+
+button {
+  font-family: 'Herculanum', sans-serif;
+  border: 0px;
+  color: #FFFFE5;
+  background-color: transparent;
+}
+
+button:hover {
+  text-decoration: underline;
+
+}
