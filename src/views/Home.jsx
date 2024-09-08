@@ -43,7 +43,7 @@ export const Home = () => {
         <p>Loading...</p>
       ) : data ? (
         <>
-        <img src={`./moon/${convertToCamelCase(moonPhase)}.svg`} width='200px' height='200px' />
+        <img src={`./moon/${convertToCamelCase(moonPhase)}.svg`} width='200px' height='200px' alt={moonPhase}/>
           <h2>{moonPhase}</h2>
           <h2>{data.resolvedAddress}</h2>
 
