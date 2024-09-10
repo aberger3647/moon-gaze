@@ -1,6 +1,6 @@
 export const firebaseConfig = {
 
-    apiKey: "AIzaSyCEETsWnJ1-Ogfp2yU2w61JVBt4hanOdsY",
+    apiKey: REACT_APP_FIREBASE_API_KEY,
   
     authDomain: "moongazing.firebaseapp.com",
   
