@@ -5,7 +5,7 @@ import {
   convertToCamelCase,
 } from "../utils";
 import { useState } from "react";
-import { getPlaces } from "../config/firestore";
+import { getPlaces, addToDb } from "../config/firestore";
 
 export const Home = () => {
   const [data, setData] = useState(null);
@@ -18,6 +18,7 @@ export const Home = () => {
     let location = formData.get("location");
 
     getPlaces();
+    addToDb();
 
     try {
       setLoading(true);

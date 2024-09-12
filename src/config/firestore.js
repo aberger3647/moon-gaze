@@ -1,10 +1,7 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+import places from "../places/places.json";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -13,11 +10,7 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_APP_ID,
 };
-
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-// Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
 export const getPlaces = async () => {
@@ -25,4 +18,15 @@ export const getPlaces = async () => {
   querySnapshot.forEach((doc) => {
     console.log(doc.id, " => ", doc.data());
   });
+};
+
+export const addToDb = async () => {
+  try {
+    for (const place of places) {
+      await addDoc(collection(db, "places"), place);
+      console.log("Added places to database")
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
