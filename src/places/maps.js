@@ -62,9 +62,10 @@ const main = async () => {
     console.log(`${i}/${places.length} finished`);
   }
 
+  const json =  JSON.stringify(results, null, 2);
   fs.writeFile(
     "locationsWithCoords.json",
-    JSON.stringify(results, null, 2),
+   json,
     (err) => {
       if (err) {
         console.error("Error writing file: ", err);
@@ -74,5 +75,6 @@ const main = async () => {
     }
   );
 };
+
 
 main();

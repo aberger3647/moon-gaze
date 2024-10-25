@@ -3,31 +3,29 @@ import {
   getConditions,
   determineMoonPhase,
   convertToCamelCase,
+  calculateDistance
 } from "../utils";
 import { useState } from "react";
-import { getPlaces, addToDb } from "../config/firestore";
 
 export const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [moonPhase, setMoonPhase] = useState("");
+  const [userCoords, setUserCoords] = useState({ lat: 0, lng: 0})
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     let location = formData.get("location");
 
-    getPlaces();
-    addToDb();
-
     try {
       setLoading(true);
       const conditions = await getConditions(location);
       if (conditions && conditions.resolvedAddress) {
-        console.log(conditions);
         setData(conditions);
+        setUserCoords(userCoords => ({ lat: conditions.latitude, lng: conditions.longitude }))
         setMoonPhase(determineMoonPhase(conditions.days[0].moonphase));
-        console.log(moonPhase);
+        calculateDistance();
       } else {
         console.error(`Unexpected data format: ${conditions}`);
       }

@@ -35,7 +35,7 @@
     "category": "Parks",
     "placeName": "AMC Maine Woods",
     "link": "https://darksky.org/places/amc-maine-woods-dark-sky-park/",
-    "coords": null,
+    "coords": "45.4912817,-69.3946364",
     "mapsLink": "https://www.outdoors.org/amc-maine-woods-international-dark-sky-park/",
     "address": "Maine, U.S.A.\nMore info"
   },
@@ -563,7 +563,7 @@
     "category": "Parks",
     "placeName": "Flagstaff Area National Monuments",
     "link": "https://darksky.org/places/flagstaff-area-national-monuments-dark-sky-park/",
-    "coords": null,
+    "coords": "35.204007,-111.5787022",
     "mapsLink": null,
     "address": "Sunset Crater Volcano National Monument"
   },
@@ -783,7 +783,6 @@
     "mapsLink": "https://goo.gl/maps/CvSiuCB29AMmUAdi8",
     "address": "Horseshoe Bay, Texas\nGoogle Maps"
   },
-  null,
   {
     "category": "Parks",
     "placeName": "Hovenweep National Monument",
@@ -860,7 +859,7 @@
     "category": "Urban Places",
     "placeName": "Joya-La Barreta Ecological Park",
     "link": "https://darksky.org/places/joya-la-barreta-ecological-park/",
-    "coords": null,
+    "coords": "20.8089809,-100.5312323",
     "mapsLink": null,
     "address": "Santa Rosa Jáuregui, 76221 Querétaro, MexicoGoogle Maps"
   },
@@ -1156,7 +1155,7 @@
     "category": "Sanctuaries",
     "placeName": "Niue",
     "link": "https://darksky.org/places/niue-dark-sky-sanctuary/",
-    "coords": null,
+    "coords": "-19.0540913,-169.903404",
     "mapsLink": null,
     "address": "Alofi\nNiue"
   },
@@ -1284,7 +1283,7 @@
     "category": "Parks",
     "placeName": "Parc national du Mont-Tremblant",
     "link": "https://darksky.org/places/parc-national-du-mont-tremblant/",
-    "coords": null,
+    "coords": "46.41494,-74.6062276",
     "mapsLink": null,
     "address": ""
   },
@@ -1681,46 +1680,6 @@
     "address": "277 UBarU Drive\nMountain Home, TX 78058 USA\nGoogle Maps"
   },
   {
-    "category": "DarkSky Approved Lodging",
-    "placeName": "Under Canvas Bryce Canyon",
-    "link": "https://darksky.org/places/under-canvas-bryce-canyon/",
-    "coords": null,
-    "mapsLink": null,
-    "address": null
-  },
-  {
-    "category": "DarkSky Approved Lodging",
-    "placeName": "Under Canvas Grand Canyon",
-    "link": "https://darksky.org/places/under-canvas-grand-canyon/",
-    "coords": null,
-    "mapsLink": null,
-    "address": null
-  },
-  {
-    "category": "DarkSky Approved Lodging",
-    "placeName": "Under Canvas Lake Powell – Grand Staircase",
-    "link": "https://darksky.org/places/under-canvas-lake-powell-grand-staircase/",
-    "coords": null,
-    "mapsLink": null,
-    "address": null
-  },
-  {
-    "category": "DarkSky Approved Lodging",
-    "placeName": "Under Canvas Moab",
-    "link": "https://darksky.org/places/under-canvas-moab/",
-    "coords": null,
-    "mapsLink": null,
-    "address": null
-  },
-  {
-    "category": "DarkSky Approved Lodging",
-    "placeName": "Under Canvas Zion",
-    "link": "https://darksky.org/places/under-canvas-zion/",
-    "coords": null,
-    "mapsLink": null,
-    "address": null
-  },
-  {
     "category": "Urban Places",
     "placeName": "Valle de Oro National Wildlife Refuge",
     "link": "https://darksky.org/places/valle-de-oro-national-wildlife-refuge-urban-night-sky-place/",
@@ -1852,7 +1811,7 @@
     "category": "Sanctuaries",
     "placeName": "Ynys Enlli – Bardsey Island",
     "link": "https://darksky.org/places/ynys-enlli-bardsey-island-dark-sky-sanctuary/",
-    "coords": null,
+    "coords": "52.7568721,-4.8015375",
     "mapsLink": null,
     "address": null
   },
