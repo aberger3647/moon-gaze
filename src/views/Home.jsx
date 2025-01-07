@@ -25,7 +25,7 @@ export const Home = () => {
         setData(conditions);
         setUserCoords(userCoords => ({ lat: conditions.latitude, lng: conditions.longitude }))
         setMoonPhase(determineMoonPhase(conditions.days[0].moonphase));
-        calculateDistance();
+        calculateDistance('37.7576928,-122.4788853', '34.0200374,-118.7420562');
       } else {
         console.error(`Unexpected data format: ${conditions}`);
       }
