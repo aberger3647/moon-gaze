@@ -21,8 +21,7 @@ require('dotenv').config();
       )}&destinations=${encodeURIComponent(destinations)}&key=${apiKey}`;
 
       const response = await axios.get(url, { httpsAgent: agent });
-      console.log("url: ", url);
-      console.log("Google API Response: ", response.data);
+      // console.log("Google API Response: ", response.data);
       res.json(response.data);
     } catch (error) {
       res.status(500).json({ error: "An error occurred" });
