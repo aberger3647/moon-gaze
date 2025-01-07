@@ -11,7 +11,7 @@
     maxVersion: "TLSv1.2", // Use TLS 1.2 to avoid HTTP/2
   });
 
-  app.get("/api/distance", async (req, res) => {
+  app.get("/distance", async (req, res) => {
     try {
       const { origins, destinations } = req.query;
       const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(

@@ -4,9 +4,10 @@
   font-weight: normal;
   font-style: normal;
 }
+
 body {
   background: linear-gradient(180deg, rgba(19,0,69,1) 0%, rgba(31,0,116,1) 100%); 
-  font-family: 'Herculanum', sans-serif;
+  font-family: sans-serif;
   color: #FFFFE5;
   height: 100vh;
   padding: 0px 20px 0px 20px;
@@ -41,12 +42,21 @@ img {
   margin-bottom: 30px;
 }
 
-form > * {
+form > * { 
   margin: 10px;
 }
 
-p, h1, h2, h3, h4 {
+p {
+  font-family: sans-serif;
+}
+
+h1 {
+  font-size: 50px;
+}
+
+h1, h2, h3, h4 {
   text-align: center;
+  font-family: 'Herculanum'
 }
 
 button {
