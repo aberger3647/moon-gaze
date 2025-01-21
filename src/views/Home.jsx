@@ -26,26 +26,37 @@ export const Home = () => {
       if (conditions && conditions.resolvedAddress) {
         setData(conditions);
         const currentCoords = `${conditions.latitude},${conditions.longitude}`;
-        // console.log("Current coordinates:", currentCoords);
-        // console.log("Places coordinates:", placesCoords);
         setUserCoords(currentCoords);
         setMoonPhase(determineMoonPhase(conditions.days[0].moonphase));
        
-        console.log("user coords", userCoords, "current coords", currentCoords);
-       
         const distances = [];
         for (let i = 0; i < 1; i++) {
-          console.log(`${i}. Current coord:`, placesCoords[i].coords);
-          // compare user's coords to every Place's coords in ../places/placesCoords.json
-          // console.log("placesCoords[i].coords", placesCoords[i].coords);
-          // const distance = await calculateDistance(
-          //   currentCoords,
-          //   placesCoords[i].coords
-          // );
+          if (typeof placesCoords[i].coords !== 'string') {
+            console.error('Invalid coords format:', placesCoords[i].coords);
+            continue;
+          }
+
+          const originCoords = currentCoords.trim().replace(/['"]/g, '');
+          const destCoords = placesCoords[i].coords.trim().replace(/['"]/g, '');
+
+          console.log("Clean coordinates:");
+          console.log("Origin:", originCoords);
+          console.log("Destination:", destCoords);
 
           const distance = await calculateDistance(
-           '37.7576928,-122.4788853', '34.0200374,-118.7420562'
+            originCoords,
+            destCoords
           );
+          console.log("Formats comparison:");
+          console.log("Working format:   '37.7576928,-122.4788853'");
+          console.log(`currentCoords:    '${currentCoords}'`);
+          console.log(`placesCoords:     '${placesCoords[i].coords}'`);
+          console.log("Types:");
+          console.log("currentCoords type:", typeof currentCoords);
+          console.log("placesCoords type:", typeof placesCoords[i].coords);
+          // const distance = await calculateDistance(
+          //  '37.7576928,-122.4788853', '34.0200374,-118.7420562'
+          // );
 
           console.log(`${i}. Distance:`, distance);
 

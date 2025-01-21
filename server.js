@@ -47,21 +47,74 @@ app.get('/api/distance', async (req, res) => {
   }
 
   try {
-    const { origins, destinations } = req.query;
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(
-      origins
-    )}&destinations=${encodeURIComponent(destinations)}&key=${apiKey}`;
+    // First log the incoming coordinates
+    console.log('Received coordinates:', {
+      origins: req.query.origins,
+      destinations: req.query.destinations
+    });
 
+    const { origins, destinations } = req.query;
+
+    // Add all necessary parameters for the Distance Matrix API
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origins}&destinations=${destinations}&mode=driving&units=imperial&key=${apiKey}`;
+
+    console.log('Requesting URL:', url);
     const response = await axios.get(url, { httpsAgent: agent });
-    const distanceInMeters = response.data.rows[0].elements[0].distance.value;
+    
+    console.log('Google API Response:', JSON.stringify(response.data, null, 2));
+
+    // More specific error handling
+    if (response.data.status !== 'OK') {
+      return res.status(400).json({
+        error: `API Error: ${response.data.status}`,
+        details: response.data.error_message || 'Unknown error'
+      });
+    }
+
+    const element = response.data.rows[0].elements[0];
+    
+    if (element.status === 'ZERO_RESULTS') {
+      return res.status(400).json({
+        error: 'No route found',
+        details: 'Could not calculate distance between these points'
+      });
+    }
+
+    if (element.status !== 'OK') {
+      return res.status(400).json({
+        error: `Route Error: ${element.status}`,
+        details: 'Could not calculate distance'
+      });
+    }
+
+    if (!element.distance) {
+      return res.status(400).json({
+        error: 'Missing distance data',
+        details: 'Distance calculation failed'
+      });
+    }
+
+    const distanceInMeters = element.distance.value;
     const distanceInMiles = Math.round(distanceInMeters * 0.000621371 * 100) / 100;
-    console.log(`Distance: ${distanceInMiles} miles`)
+    
+    console.log(`Successfully calculated distance: ${distanceInMiles} miles`);
     res.json(distanceInMiles);
+
   } catch (error) {
-    console.error('Error:', error.message);
-    res.status(500).json({ error: "An error occurred", details: error.message });
+    console.error('Error details:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status
+    });
+    
+    res.status(500).json({
+      error: "An error occurred",
+      details: error.message,
+      response: error.response?.data
+    });
   }
 });
+
 
 app.get('/api/test', (req, res) => {
   res.json({ message: 'Test endpoint working' });
