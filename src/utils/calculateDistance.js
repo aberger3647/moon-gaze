@@ -15,7 +15,7 @@ export const calculateDistance = async (origin, destination) => {
     }
 
     const distance = await response.json();
-    console.log("Distance received:", distance);
+    // console.log("Distance received:", distance);
     return distance;
   } catch (error) {
     console.error("Error calculating distance:", error);

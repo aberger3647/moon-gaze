@@ -30,7 +30,7 @@ export const Home = () => {
         setMoonPhase(determineMoonPhase(conditions.days[0].moonphase));
        
         const distances = [];
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < placesCoords.length; i++) {
           if (typeof placesCoords[i].coords !== 'string') {
             console.error('Invalid coords format:', placesCoords[i].coords);
             continue;
@@ -39,26 +39,10 @@ export const Home = () => {
           const originCoords = currentCoords.trim().replace(/['"]/g, '');
           const destCoords = placesCoords[i].coords.trim().replace(/['"]/g, '');
 
-          console.log("Clean coordinates:");
-          console.log("Origin:", originCoords);
-          console.log("Destination:", destCoords);
-
           const distance = await calculateDistance(
             originCoords,
             destCoords
           );
-          console.log("Formats comparison:");
-          console.log("Working format:   '37.7576928,-122.4788853'");
-          console.log(`currentCoords:    '${currentCoords}'`);
-          console.log(`placesCoords:     '${placesCoords[i].coords}'`);
-          console.log("Types:");
-          console.log("currentCoords type:", typeof currentCoords);
-          console.log("placesCoords type:", typeof placesCoords[i].coords);
-          // const distance = await calculateDistance(
-          //  '37.7576928,-122.4788853', '34.0200374,-118.7420562'
-          // );
-
-          console.log(`${i}. Distance:`, distance);
 
           if (distance !== null) {
             distances.push(distance);
@@ -68,7 +52,9 @@ export const Home = () => {
         }
         // sort Places by distance to user's coords, from least to most
         // filter list by distance eg: <5, <25, <50
-        // console.log(distances);
+        console.log("distances",distances);
+        const sorted = distances.sort((a, b) => a - b);
+        console.log("sorted",sorted)
       } else {
         console.error(`Unexpected data format: ${conditions}`);
       }

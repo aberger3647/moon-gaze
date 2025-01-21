@@ -33,13 +33,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const apiKey = process.env.REACT_APP_DISTANCE_MATRIX_API_KEY;
 
-const agent = new https.Agent({
-  keepAlive: true,
-  rejectUnauthorized: true,
-  maxVersion: "TLSv1.2",
-});
 
 app.get('/api/distance', async (req, res) => {
   if (!req.query.origins || !req.query.destinations) {
@@ -47,70 +41,31 @@ app.get('/api/distance', async (req, res) => {
   }
 
   try {
-    // First log the incoming coordinates
-    console.log('Received coordinates:', {
-      origins: req.query.origins,
-      destinations: req.query.destinations
-    });
-
     const { origins, destinations } = req.query;
-
-    // Add all necessary parameters for the Distance Matrix API
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origins}&destinations=${destinations}&mode=driving&units=imperial&key=${apiKey}`;
-
-    console.log('Requesting URL:', url);
-    const response = await axios.get(url, { httpsAgent: agent });
     
-    console.log('Google API Response:', JSON.stringify(response.data, null, 2));
+    // Parse coordinates
+    const [originLat, originLng] = origins.split(',').map(Number);
+    const [destLat, destLng] = destinations.split(',').map(Number);
 
-    // More specific error handling
-    if (response.data.status !== 'OK') {
-      return res.status(400).json({
-        error: `API Error: ${response.data.status}`,
-        details: response.data.error_message || 'Unknown error'
-      });
-    }
+    // Haversine formula implementation
+    const R = 3959; // Earth's radius in miles
+    const dLat = (destLat - originLat) * Math.PI / 180;
+    const dLon = (destLng - originLng) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(originLat * Math.PI / 180) * Math.cos(destLat * Math.PI / 180) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const distance = Math.round(R * c * 100) / 100; // Round to 2 decimal places
 
-    const element = response.data.rows[0].elements[0];
-    
-    if (element.status === 'ZERO_RESULTS') {
-      return res.status(400).json({
-        error: 'No route found',
-        details: 'Could not calculate distance between these points'
-      });
-    }
-
-    if (element.status !== 'OK') {
-      return res.status(400).json({
-        error: `Route Error: ${element.status}`,
-        details: 'Could not calculate distance'
-      });
-    }
-
-    if (!element.distance) {
-      return res.status(400).json({
-        error: 'Missing distance data',
-        details: 'Distance calculation failed'
-      });
-    }
-
-    const distanceInMeters = element.distance.value;
-    const distanceInMiles = Math.round(distanceInMeters * 0.000621371 * 100) / 100;
-    
-    console.log(`Successfully calculated distance: ${distanceInMiles} miles`);
-    res.json(distanceInMiles);
+    // console.log(`Calculated direct distance: ${distance} miles`);
+    res.json(distance);
 
   } catch (error) {
-    console.error('Error details:', {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status
-    });
-    
+    console.error('Error calculating distance:', error);
     res.status(500).json({
       error: "An error occurred",
-      details: error.message,
-      response: error.response?.data
+      details: error.message
     });
   }
 });
