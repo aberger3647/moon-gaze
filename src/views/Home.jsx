@@ -3,15 +3,16 @@ import {
   getConditions,
   determineMoonPhase,
   convertToCamelCase,
-  calculateDistance
+  calculateDistance,
 } from "../utils";
 import { useState } from "react";
+import placesCoords from "../places/placesCoords.json";
 
 export const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [moonPhase, setMoonPhase] = useState("");
-  const [userCoords, setUserCoords] = useState('0,0')
+  const [userCoords, setUserCoords] = useState("0,0");
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -21,14 +22,42 @@ export const Home = () => {
     try {
       setLoading(true);
       const conditions = await getConditions(location);
+
       if (conditions && conditions.resolvedAddress) {
         setData(conditions);
-        setUserCoords(`${conditions.latitude}, ${conditions.longitude}` )
+        const currentCoords = `${conditions.latitude},${conditions.longitude}`;
+        // console.log("Current coordinates:", currentCoords);
+        // console.log("Places coordinates:", placesCoords);
+        setUserCoords(currentCoords);
         setMoonPhase(determineMoonPhase(conditions.days[0].moonphase));
-        // calculateDistance(userCoords, '34.0200374,-118.7420562');
-        console.log("user coords", userCoords)
-        // user coords to string
-        calculateDistance(userCoords, '34.0200374,-118.7420562');
+       
+        console.log("user coords", userCoords, "current coords", currentCoords);
+       
+        const distances = [];
+        for (let i = 0; i < 1; i++) {
+          console.log(`${i}. Current coord:`, placesCoords[i].coords);
+          // compare user's coords to every Place's coords in ../places/placesCoords.json
+          // console.log("placesCoords[i].coords", placesCoords[i].coords);
+          // const distance = await calculateDistance(
+          //   currentCoords,
+          //   placesCoords[i].coords
+          // );
+
+          const distance = await calculateDistance(
+           '37.7576928,-122.4788853', '34.0200374,-118.7420562'
+          );
+
+          console.log(`${i}. Distance:`, distance);
+
+          if (distance !== null) {
+            distances.push(distance);
+          } else {
+            console.log(`Failed to calculate distance for coords ${i}`);
+          }
+        }
+        // sort Places by distance to user's coords, from least to most
+        // filter list by distance eg: <5, <25, <50
+        // console.log(distances);
       } else {
         console.error(`Unexpected data format: ${conditions}`);
       }
@@ -38,8 +67,6 @@ export const Home = () => {
       setLoading(false);
     }
   };
-
-
 
   return (
     <main>
