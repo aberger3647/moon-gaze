@@ -11,7 +11,7 @@ export const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [moonPhase, setMoonPhase] = useState("");
-  const [userCoords, setUserCoords] = useState({ lat: 0, lng: 0})
+  const [userCoords, setUserCoords] = useState('0,0')
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -23,9 +23,12 @@ export const Home = () => {
       const conditions = await getConditions(location);
       if (conditions && conditions.resolvedAddress) {
         setData(conditions);
-        setUserCoords(userCoords => ({ lat: conditions.latitude, lng: conditions.longitude }))
+        setUserCoords(`${conditions.latitude}, ${conditions.longitude}` )
         setMoonPhase(determineMoonPhase(conditions.days[0].moonphase));
-        calculateDistance('37.7576928,-122.4788853', '34.0200374,-118.7420562');
+        // calculateDistance(userCoords, '34.0200374,-118.7420562');
+        console.log("user coords", userCoords)
+        // user coords to string
+        calculateDistance(userCoords, '34.0200374,-118.7420562');
       } else {
         console.error(`Unexpected data format: ${conditions}`);
       }
@@ -61,8 +64,8 @@ export const Home = () => {
           <h2>{data.resolvedAddress}</h2>
 
           <Conditions data={data} />
-          <Alerts location={data.resolvedAddress} />
           <Places location={data.resolvedAddress} />
+          <Alerts location={data.resolvedAddress} />
         </>
       ) : null}
     </main>
