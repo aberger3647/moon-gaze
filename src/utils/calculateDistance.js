@@ -12,6 +12,7 @@ export const calculateDistance = async (origin, destination) => {
     const contentType = response.headers.get("content-type");
     if (contentType && contentType.includes("application/json")) {
       const miles = await response.json();
+      console.log("miles: ", miles);
       return miles;
     } else {
       throw new Error("Received non-JSON response");
