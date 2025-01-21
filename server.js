@@ -55,6 +55,7 @@ app.get('/api/distance', async (req, res) => {
     const response = await axios.get(url, { httpsAgent: agent });
     const distanceInMeters = response.data.rows[0].elements[0].distance.value;
     const distanceInMiles = Math.round(distanceInMeters * 0.000621371 * 100) / 100;
+    console.log(`Distance: ${distanceInMiles} miles`)
     res.json(distanceInMiles);
   } catch (error) {
     console.error('Error:', error.message);
