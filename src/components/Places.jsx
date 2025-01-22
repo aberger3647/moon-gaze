@@ -1,10 +1,10 @@
-import {useState} from 'react'
+import { useState } from "react";
 
 export const Places = ({ location, sortedPlaces, userCoords }) => {
-const [selectedMiles, setSelectedMiles] = useState("100")
-console.log(selectedMiles)
+  const [selectedMiles, setSelectedMiles] = useState("100");
+  console.log(selectedMiles);
   console.log("sortedPlaces", sortedPlaces);
-  const nearbyPlaces = sortedPlaces.filter(place => {
+  const nearbyPlaces = sortedPlaces.filter((place) => {
     return place.distance < selectedMiles;
   });
 
@@ -16,26 +16,32 @@ console.log(selectedMiles)
       <p>
         Within{" "}
         <span>
-        <select onChange={(e) => setSelectedMiles(e.target.value)} defaultValue={100}>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-        <option value="500">500</option>
-      </select>
+          <select
+            onChange={(e) => setSelectedMiles(e.target.value)}
+            defaultValue={50}
+          >
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+          </select>
         </span>{" "}
         miles of <span>{location}</span>
       </p>
 
+      <div className="places">
       {nearbyPlaces.map((place, index) => (
         <>
-        <div key={index} className='place'>
-          <p>{place.placeName}</p>
-          <p>{place.category}</p>
-          <p>{`Distance: ${place.distance.toFixed(1)} miles`}</p>
-        </div>
-        <hr/>
+            <div key={index} className="place">
+              <p>{place.placeName}</p>
+              <p>{place.category}</p>
+              <p>{`${Math.floor(place.distance)} miles away`}</p>
+            </div>
+            <hr />
         </>
       ))}
+      </div>
     </>
   );
 };

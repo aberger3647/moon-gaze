@@ -74,7 +74,7 @@ export const Home = () => {
 
   return (
     <main>
-      <h1>Moon Phase</h1>
+      <h1>Moongaz.ing</h1>
 
       <form onSubmit={onSubmit}>
         <label htmlFor="location">Enter location</label>
