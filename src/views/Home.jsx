@@ -12,7 +12,9 @@ export const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [moonPhase, setMoonPhase] = useState("");
+
   const [userCoords, setUserCoords] = useState("0,0");
+
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +27,7 @@ export const Home = () => {
 
       if (conditions && conditions.resolvedAddress) {
         setData(conditions);
+
         const currentCoords = `${conditions.latitude},${conditions.longitude}`;
         setUserCoords(currentCoords);
         setMoonPhase(determineMoonPhase(conditions.days[0].moonphase));
@@ -55,6 +58,7 @@ export const Home = () => {
         console.log("distances",distances);
         const sorted = distances.sort((a, b) => a - b);
         console.log("sorted",sorted)
+
       } else {
         console.error(`Unexpected data format: ${conditions}`);
       }
