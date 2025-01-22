@@ -1,9 +1,11 @@
-import { Miles } from ".";
+import {useState} from 'react'
 
 export const Places = ({ location, sortedPlaces, userCoords }) => {
+const [selectedMiles, setSelectedMiles] = useState("100")
+console.log(selectedMiles)
   console.log("sortedPlaces", sortedPlaces);
   const nearbyPlaces = sortedPlaces.filter(place => {
-    return place.distance < 150;
+    return place.distance < selectedMiles;
   });
 
   console.log("nearbyPlaces", nearbyPlaces);
@@ -14,7 +16,12 @@ export const Places = ({ location, sortedPlaces, userCoords }) => {
       <p>
         Within{" "}
         <span>
-          <Miles />
+        <select onChange={(e) => setSelectedMiles(e.target.value)} defaultValue={100}>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="500">500</option>
+      </select>
         </span>{" "}
         miles of <span>{location}</span>
       </p>
