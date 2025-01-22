@@ -3,15 +3,18 @@ import {
   getConditions,
   determineMoonPhase,
   convertToCamelCase,
-  calculateDistance
+  calculateDistance,
 } from "../utils";
 import { useState } from "react";
+import placesCoords from "../places/placesCoords.json";
 
 export const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [moonPhase, setMoonPhase] = useState("");
-  const [userCoords, setUserCoords] = useState('0,0')
+
+  const [userCoords, setUserCoords] = useState("0,0");
+
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -21,11 +24,41 @@ export const Home = () => {
     try {
       setLoading(true);
       const conditions = await getConditions(location);
+
       if (conditions && conditions.resolvedAddress) {
         setData(conditions);
-        setUserCoords(`${conditions.latitude}, ${conditions.longitude}` )
+
+        const currentCoords = `${conditions.latitude},${conditions.longitude}`;
+        setUserCoords(currentCoords);
         setMoonPhase(determineMoonPhase(conditions.days[0].moonphase));
-        calculateDistance(userCoords, '34.0200374,-118.7420562');
+       
+        const distances = [];
+        for (let i = 0; i < placesCoords.length; i++) {
+          if (typeof placesCoords[i].coords !== 'string') {
+            console.error('Invalid coords format:', placesCoords[i].coords);
+            continue;
+          }
+
+          const originCoords = currentCoords.trim().replace(/['"]/g, '');
+          const destCoords = placesCoords[i].coords.trim().replace(/['"]/g, '');
+
+          const distance = await calculateDistance(
+            originCoords,
+            destCoords
+          );
+
+          if (distance !== null) {
+            distances.push(distance);
+          } else {
+            console.log(`Failed to calculate distance for coords ${i}`);
+          }
+        }
+        // sort Places by distance to user's coords, from least to most
+        // filter list by distance eg: <5, <25, <50
+        console.log("distances",distances);
+        const sorted = distances.sort((a, b) => a - b);
+        console.log("sorted",sorted)
+
       } else {
         console.error(`Unexpected data format: ${conditions}`);
       }
@@ -35,8 +68,6 @@ export const Home = () => {
       setLoading(false);
     }
   };
-
-
 
   return (
     <main>

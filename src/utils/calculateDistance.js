@@ -1,23 +1,26 @@
 export const calculateDistance = async (origin, destination) => {
-  const url = `/api/distance?origins=${origin}&destinations=${destination}`;
+  const url = `/api/distance?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}`;
 
   try {
-    const response = await fetch(url);
-
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      const errorText = await response.text();
+      throw new Error(`HTTP error! Status: ${response.status}, ${errorText}`);
     }
 
-    // Check if the response is JSON
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("application/json")) {
-      const miles = await response.json();
-      console.log("miles: ", miles);
-      return miles;
-    } else {
-      throw new Error("Received non-JSON response");
-    }
+
+    const distance = await response.json();
+    // console.log("Distance received:", distance);
+    return distance;
+
   } catch (error) {
-    console.error("Error fetching data: ", error);
+    console.error("Error calculating distance:", error);
+    return null;
   }
 };
