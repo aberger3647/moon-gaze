@@ -46,8 +46,9 @@ form > * {
   margin: 10px;
 }
 
-p {
+.place {
   font-family: sans-serif;
+  line-height:30%;
 }
 
 h1 {
@@ -69,4 +70,10 @@ button {
 button:hover {
   text-decoration: underline;
 
+}
+
+hr {
+  color: white;
+  width: 80%;
+  opacity: 0.5;
 }
