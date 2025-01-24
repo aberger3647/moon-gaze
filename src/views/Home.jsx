@@ -43,6 +43,8 @@ export const Home = () => {
           const distance = await calculateDistance(originCoords, destCoords);
 
           if (distance !== null) {
+            console.log("placesCoords[i]", placesCoords[i]);
+            console.log("distance", distance);
             distanceArr.push({
               placeName: placesCoords[i].placeName,
               category: placesCoords[i].category,
@@ -56,11 +58,14 @@ export const Home = () => {
         // filter list by distance eg: <5, <25, <50
         console.log("distanceArr", distanceArr);
         const sorted = distanceArr.sort((a, b) => a.distance - b.distance);
-        console.log("sorted places with distances", sorted.map(place => ({
-          name: place.placeName,
-          distance: place.distance,
-          category: place.category
-        })))
+        console.log(
+          "sorted places with distances",
+          sorted.map((place) => ({
+            name: place.placeName,
+            distance: place.distance,
+            category: place.category,
+          }))
+        );
         setSortedPlaces(sorted);
       } else {
         console.error(`Unexpected data format: ${conditions}`);
@@ -95,7 +100,11 @@ export const Home = () => {
           <h2>{data.resolvedAddress}</h2>
 
           <Conditions data={data} />
-          <Places location={data.resolvedAddress} sortedPlaces={sortedPlaces} userCoords={userCoords} />
+          <Places
+            location={data.resolvedAddress}
+            sortedPlaces={sortedPlaces}
+            userCoords={userCoords}
+          />
           <Alerts location={data.resolvedAddress} />
         </>
       ) : null}
